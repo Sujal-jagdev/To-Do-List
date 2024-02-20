@@ -1,95 +1,71 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client"
+import React, { useState } from 'react'
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import { Main } from 'next/document'
 
-export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+const page = () => {
+  const [title, settitle] = useState('')
+  const [desc, setdesc] = useState('')
+const [mainTask, setmainTask] = useState([])
+  const submit = (e)=>{
+    e.preventDefault();
+    setmainTask([...mainTask,{title,desc}])
+    settitle('')
+    setdesc('')
+    console.log(mainTask)
+  }
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+const deleteTask = (i)=>{
+  let copytask = [...mainTask]
+  copytask.splice(i,1)
+  setmainTask(copytask)
 }
+
+  let noTask = <h5 className='fw-bolder'>No Task Here...</h5>
+
+ if (mainTask.length>0) {
+  noTask = mainTask.map(function(t,i){
+    return(
+    <li className=' list-unstyled d-flex align-items-center justify-content-between '>
+        <div>
+      <h3 className='fw-bolder'>{t.title}</h3>
+      <h6>{t.desc}</h6>
+    </div>
+    <button className='btn bg-dark text-light fw-bolder col-lg-2 col-md-7' onClick={
+      function(i){
+        deleteTask()
+      }
+    }>Delete Task</button>
+    </li>
+
+    );
+  })
+ }
+  return (
+    <>
+      <h1 className='text-center fw-bolder bg-dark text-light p-3'>My To-Do List</h1>
+      <div className="container">
+
+        <form className='col-12 d-flex align-items-center justify-content-lg-between justify-content-md-center flex-lg-row flex-column' onSubmit={submit}>
+          <input type="text" className='col-lg-4 col-md-7' placeholder='Enter Your Title Here' value={title} onChange={
+            function(e){
+              settitle(e.target.value)
+            }
+          }/>
+          <input type="text" className='col-lg-4 col-md-7 mt-lg-0 mt-4' placeholder='Enter Your Description Here' value={desc} onChange={
+            function(e){
+              setdesc(e.target.value)
+            }
+          }/>
+          <button className='btn bg-dark text-light fw-bolder col-lg-2 col-md-7 mt-lg-0 mt-5'>Add Task</button>
+        </form>
+        <hr />
+        <ul className='notask bg-light p-2'>
+          {noTask}
+        </ul>
+      </div>
+    </>
+  )
+}
+
+export default page
