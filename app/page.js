@@ -7,6 +7,7 @@ const page = () => {
   const [title, settitle] = useState('')
   const [desc, setdesc] = useState('')
 const [mainTask, setmainTask] = useState([])
+
   const submit = (e)=>{
     e.preventDefault();
     setmainTask([...mainTask,{title,desc}])
@@ -52,7 +53,7 @@ const deleteTask = (i)=>{
               settitle(e.target.value)
             }
           }/>
-          <input type="text" className='col-lg-4 col-md-7 mt-lg-0 mt-4' placeholder='Enter Your Description Here' value={desc} onChange={
+          <input type="date" className='col-lg-4 col-md-7 mt-lg-0 mt-4' placeholder='Enter Your Description Here' value={desc} onChange={
             function(e){
               setdesc(e.target.value)
             }
