@@ -27,45 +27,51 @@ const deleteTask = (i)=>{
  if (mainTask.length>0) {
   noTask = mainTask.map(function(t,i){
     return(
-    <li className=' list-unstyled d-flex align-items-center justify-content-between '>
+    <ol>
+      <li className='d-flex align-items-center justify-content-between '>
         <div>
       <h3 className='fw-bolder'>{t.title}</h3>
       <h6>{t.desc}</h6>
+      
     </div>
-    <button className='btn bg-dark text-light fw-bolder col-lg-2 col-md-7' onClick={
+    <button className='btn bg-danger text-light fw-bolder col-lg-2 col-md-7' onClick={
       function(i){
         deleteTask()
       }
     }>Delete Task</button>
+    
     </li>
+    <hr />
+    </ol>
+    
 
     );
   })
  }
   return (
-    <>
+    <div className='main'>
       <h1 className='text-center fw-bolder bg-dark text-light p-3'>My To-Do List</h1>
       <div className="container">
 
         <form className='col-12 d-flex align-items-center justify-content-lg-between justify-content-md-center flex-lg-row flex-column' onSubmit={submit}>
-          <input type="text" className='col-lg-4 col-md-7' placeholder='Enter Your Title Here' value={title} onChange={
+          <input type="text" className='col-lg-4 col-md-7 rounded' placeholder='Enter Your Title Here' value={title} onChange={
             function(e){
               settitle(e.target.value)
             }
           }/>
-          <input type="date" className='col-lg-4 col-md-7 mt-lg-0 mt-4' placeholder='Enter Your Description Here' value={desc} onChange={
+          <input type="date" className='col-lg-4 col-md-7 mt-lg-0 mt-4 rounded' placeholder='Enter Your Description Here' value={desc} onChange={
             function(e){
               setdesc(e.target.value)
             }
           }/>
-          <button className='btn bg-dark text-light fw-bolder col-lg-2 col-md-7 mt-lg-0 mt-5'>Add Task</button>
+          <button className='btn bg-success text-light fw-bolder col-lg-2 col-md-7 mt-lg-0 mt-5'>Add Task</button>
         </form>
         <hr />
-        <ul className='notask bg-light p-2'>
+        <ul className='notask p-3'>
           {noTask}
         </ul>
       </div>
-    </>
+    </div>
   )
 }
 
